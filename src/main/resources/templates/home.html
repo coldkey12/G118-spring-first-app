@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>SALEM BITLAB</h1>
+
+<form action="/add-user" method="post">
+    <input name="email" type="text" placeholder="Insert email..."><br><br>
+    <input name="password" type="password" placeholder="Insert password..."><br><br>
+    <input name="fullName" type="text" placeholder="Insert full name..."><br><br>
+    <button>ADD USER</button>
+</form>
+
+<table cellpadding="10px">
+    <thead>
+        <th>ID</th>
+        <th>EMAIL</th>
+        <th>FULL NAME</th>
+        <th>DETAILS</th>
+    </thead>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.fullName}"></td>
+        <td><a th:href="${'/user-details?user_id=' + user.id}">DETAILS</a></td>
+    </tr>
+</table>
+</body>
+</html>
