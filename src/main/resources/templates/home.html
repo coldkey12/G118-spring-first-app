@@ -5,6 +5,16 @@
     <title>Title</title>
 </head>
 <body>
+<form action="/search" method="get">
+    <input type="text" placeholder="Search..." name="search">
+    <button>FIND</button>
+</form>
+<form action="/search-alt" method="get">
+    <input type="text" placeholder="Search..." name="search">
+    <button>FIND ALTERNATIVE</button>
+</form>
+
+<h1 th:text="${usersAlt}"></h1>
 <h1>SALEM BITLAB</h1>
 
 <form action="/add-user" method="post">
@@ -16,16 +26,22 @@
 
 <table cellpadding="10px">
     <thead>
-        <th>ID</th>
-        <th>EMAIL</th>
-        <th>FULL NAME</th>
-        <th>DETAILS</th>
+    <th>ID</th>
+    <th>EMAIL</th>
+    <th>FULL NAME</th>
+    <th>DETAILS</th>
+    <th>REMOVE</th>
     </thead>
     <tr th:each="user : ${users}">
         <td th:text="${user.id}"></td>
         <td th:text="${user.email}"></td>
         <td th:text="${user.fullName}"></td>
         <td><a th:href="${'/user-details?user_id=' + user.id}">DETAILS</a></td>
+        <td>
+            <form th:action="${'/user-delete/' + user.id}" method="post">
+                <button>REMOVE ACCOUNT</button>
+            </form>
+        </td>
     </tr>
 </table>
 </body>
