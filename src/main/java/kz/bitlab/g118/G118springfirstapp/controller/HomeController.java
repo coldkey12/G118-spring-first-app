@@ -34,4 +34,17 @@ public class HomeController {
         model.addAttribute("user", user);
         return "userDetails";
     }
+
+    @PostMapping("/update-user-details")
+    public String updateUserDetails(@RequestParam(name = "id") Long id, User user){
+        user.setId(id);
+        DbManager.updateUser(user);
+        return "redirect:/";
+    }
+
+    @PostMapping("/delete-user-details")
+    public String deleteUserDetails(@RequestParam(name = "id") Long id){
+        DbManager.deleteUserById(id);
+        return "redirect:/";
+    }
 }

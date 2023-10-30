@@ -5,11 +5,16 @@
     <title>Title</title>
 </head>
 <body>
-<form action="/add-user" method="post">
+<form action="/update-user-details" method="post">
+    <input type="hidden" th:value="${user.id}" name="id">
     <input th:value="${user.email}" name="email" type="text" placeholder="Insert email..."><br><br>
     <input th:value="${user.password}" name="password" type="password" placeholder="Insert password..."><br><br>
     <input th:value="${user.fullName}" name="fullName" type="text" placeholder="Insert full name..."><br><br>
-    <button>ADD USER</button>
+    <button>UPDATE USER</button>
+</form>
+<form action="/delete-user-details" method="post">
+    <input type="hidden" th:value="${user.id}" name="id">
+    <button>DELETE USER</button>
 </form>
 </body>
 </html>
