@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
+<head th:insert="~{head}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<body class="container col-6 mx-auto">
 <form th:action="${'/user-edit/' + user.id}" method="post">
     <input th:value="${user.email}" name="email" type="text" placeholder="Insert email..."><br><br>
     <input th:value="${user.password}" name="password" type="password" placeholder="Insert password..."><br><br>
     <input th:value="${user.fullName}" name="fullName" type="text" placeholder="Insert full name..."><br><br>
+    <select name="cityId" class="form-select">
+        <option th:each="city : ${cities}"
+                th:text="${city.name + ' / ' + city.shortName}"
+                th:value="${city.id}"
+                th:selected="${user.city != null && city.id == user.city.id}">
+        </option>
+    </select>
     <button>SAVE CHANGES</button>
 </form>
 <hr>

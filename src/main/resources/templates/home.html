@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
+<head th:insert="~{head}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<body class="container col-8 mx-auto">
 <form action="/search" method="get">
     <input type="text" placeholder="Search..." name="search">
     <button>FIND</button>
@@ -29,13 +29,22 @@
     <th>ID</th>
     <th>EMAIL</th>
     <th>FULL NAME</th>
+    <th>PROGRAMMING LANGUAGE</th>
     <th>DETAILS</th>
     <th>REMOVE</th>
     </thead>
-    <tr th:each="user : ${users}">
+    <tr th:style="${user.programmingLanguage == 'Java'
+  ? 'color:green;'
+  : (user.programmingLanguage == 'C#'
+  ? 'color:blue'
+  : (user.programmingLanguage == 'Golang'
+  ? 'color:orange'
+  : 'color:red'))}"
+        th:each="user : ${users}">
         <td th:text="${user.id}"></td>
         <td th:text="${user.email}"></td>
         <td th:text="${user.fullName}"></td>
+        <td th:text="${user.programmingLanguage}"></td>
         <td><a th:href="${'/user-details?user_id=' + user.id}">DETAILS</a></td>
         <td>
             <form th:action="${'/user-delete/' + user.id}" method="post">

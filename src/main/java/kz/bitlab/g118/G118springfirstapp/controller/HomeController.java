@@ -2,6 +2,7 @@ package kz.bitlab.g118.G118springfirstapp.controller;
 
 import jdk.jfr.Category;
 import kz.bitlab.g118.G118springfirstapp.db.DbManager;
+import kz.bitlab.g118.G118springfirstapp.model.City;
 import kz.bitlab.g118.G118springfirstapp.model.User;
 import lombok.Getter;
 import lombok.NonNull;
@@ -34,6 +35,8 @@ public class HomeController {
     public String getUserDetails(@RequestParam(name = "user_id") Long id,
                                  Model model) {
         User user = DbManager.getUserById(id);
+        List<City> cities = DbManager.getCities();
+        model.addAttribute("cities", cities);
         model.addAttribute("user", user);
         return "userDetails";
     }
@@ -54,11 +57,12 @@ public class HomeController {
     @PostMapping("/user-edit/{id}")
     public String editUser(@RequestParam String email,
                            @RequestParam(name = "fullName") String fullName,
-                           @PathVariable Long id) {
+                           @PathVariable Long id,
+                           @RequestParam Long cityId) {
         if (fullName == "" || fullName.isEmpty() || email == null || email.isEmpty()) {
             throw new IllegalArgumentException("Parameters can't be null");
         }
-        DbManager.editUser(id, email, fullName);
+        DbManager.editUser(id, email, fullName, cityId);
         return "redirect:/";
     }
 
@@ -72,15 +76,15 @@ public class HomeController {
     public String search(@RequestParam String search,
                          Model model) {
         List<User> users = DbManager.findUsers(search);
-        model.addAttribute("users",users);
+        model.addAttribute("users", users);
         return "home";
     }
 
     @GetMapping("/search-alt")
     public String searchAlt(@RequestParam String search,
-                         Model model) {
+                            Model model) {
         String users = DbManager.findUsersAlt(search);
-        model.addAttribute("usersAlt",users);
+        model.addAttribute("usersAlt", users);
         return "home";
     }
 }
